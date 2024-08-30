@@ -6,6 +6,7 @@ See BFG documentation for usage. I plan to create some files in `main` branch an
 - [Initial state](#initial-state)
 - [Naive clean-up](#naive-clean-up)
 - [Using BFG to rewrite history](#using-bfg-to-rewrite-history)
+  - [Before Pushing Dangerous Changes](#before-pushing-dangerous-changes)
 
 ## Initial state
 
@@ -195,5 +196,22 @@ At this point the offending files are gone. They no longer appear in any of the 
 
 > [!NOTE]
 > BFG does not modify history of the latest commit by default. If this is required, either commit a change to remove the offending content and then use BFG to remove the content from the commit history (my preference), or use the `--no-blob-protection` option with BFG. However, the BFG help indicates the `--no-blob-protection` is *NOT RECOMMNEDED to rewrite the lastest commit*. So, maybe don't do that.
+
+### Before Pushing Dangerous Changes
+
+Before attempting to push changes that have the potential to destroy your repo I strongly recommend taking two additional actions:
+
+1. Backup the contents of the repo to a safe and secure location (e.g., a secure encrypted disk).
+1. Make a local clone of the repo and examine the contents carefully. This can be done using the following:
+
+```shell
+$ mkdir local_cone
+$ cd local_clone
+$ git clone --local ../bfg-test-repo.git
+Cloning into 'bfg-test-repo'...
+done.
+```
+
+You now have a fresh clone of the repo state prior to pushing the changes. Examine the contents carefully before proceeding to push to the remote.
 
 *"With great power comes great responsibility."*
