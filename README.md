@@ -205,7 +205,7 @@ Before attempting to push changes that have the potential to destroy your repo I
 1. Make a local clone of the repo and examine the contents carefully. This can be done using the following:
 
 ```shell
-$ mkdir local_cone
+$ mkdir local_clone
 $ cd local_clone
 $ git clone --local ../bfg-test-repo.git
 Cloning into 'bfg-test-repo'...
