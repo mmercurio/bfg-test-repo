@@ -1,7 +1,11 @@
 # bfg-test-repo
 A safe place to test a dangerously powerful weapon, the [BFG Repo-Cleaner](https://rtyley.github.io/bfg-repo-cleaner/).
 
-See BFG documentation for usage. I plan to create some files in `main` branch and other branches, and then use them bfg to delete them from existance.
+See BFG documentation for usage. I plan to create some files in `main` branch and other branches, and then use them bfg to delete them from existence.
+
+- [Initial state](#initial-state)
+- [Naive clean-up](#naive-clean-up)
+- [Using BFG to rewrite history](#using-bfg-to-rewrite-history)
 
 ## Initial state
 
@@ -53,7 +57,7 @@ Changes to  `files/bfg_deleted.md`:
 +Just to make it more interesting. This file is being modified in another branch that is not merged, but pushed to the remote.
 ```
 
-Contents of `files/ unmerged_secrets.txt`:
+Contents of `files/unmerged_secrets.txt`:
 
 ```
 This file potentially contains some secret information that has
@@ -145,3 +149,48 @@ Oops.
 
 
 ## Using BFG to rewrite history
+
+Based on documentation [here](https://rtyley.github.io/bfg-repo-cleaner/), using the following bfg commands:
+
+```shell
+git clone --mirror git@github.com:mmercurio/bfg-test-repo.git
+bfg --delete-files bfg_deleted.md bfg-test-repo.git
+bfg --delete-files unmerged_secrets.txt bfg-test-repo.git
+```
+
+Followed by:
+
+```shell
+cd bfg-test-repo.git
+git reflog expire --expire=now --all && git gc --prune=now --aggressive
+git push
+```
+
+Note, that the `git push` will result in errors pushing some of the refs because of how it rewrites history and should be considered ***extremely dangerous***! You should first backup the entire repo before attempting to use bfg or similar tools to write history like this.
+
+Example of errors when pushing (even if using `push --force`):
+
+```shell
+$ git push
+Enumerating objects: 13, done.
+Writing objects: 100% (13/13), 3.12 KiB | 3.12 MiB/s, done.
+Total 13 (delta 0), reused 0 (delta 0), pack-reused 13 (from 1)
+remote: Resolving deltas: 100% (6/6), done.
+To github.com:mmercurio/bfg-test-repo.git
+ + 2e820f8...4ad9cf6 main -> main (forced update)
+ + 8745fbf...c3cbac1 newbranch -> newbranch (forced update)
+ + ee5188f...22d2b27 readme -> readme (forced update)
+ + 853c259...c13d9ea staging -> staging (forced update)
+ ! [remote rejected] refs/pull/1/head -> refs/pull/1/head (deny updating a hidden ref)
+error: failed to push some refs to 'github.com:mmercurio/bfg-test-repo.git'
+
+$ git push --force
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To github.com:mmercurio/bfg-test-repo.git
+ ! [remote rejected] refs/pull/1/head -> refs/pull/1/head (deny updating a hidden ref)
+error: failed to push some refs to 'github.com:mmercurio/bfg-test-repo.git'
+```
+
+At this point the offending files are gone. They no longer appear in any of the commit history.
+
+*"With great power comes great responsibility."*
