@@ -193,4 +193,7 @@ error: failed to push some refs to 'github.com:mmercurio/bfg-test-repo.git'
 
 At this point the offending files are gone. They no longer appear in any of the commit history.
 
+> [!NOTE]
+> BFG does not modify history of the latest commit by default. If this is required, either commit a change to remove the offending content and then use BFG to remove the content from the commit history (my preference), or use the `--no-blob-protection` option with BFG. However, the BFG help indicates the `--no-blob-protection` is *NOT RECOMMNEDED to rewrite the lastest commit*. So, maybe don't do that.
+
 *"With great power comes great responsibility."*
