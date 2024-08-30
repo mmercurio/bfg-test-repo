@@ -110,7 +110,7 @@ For example:
 ```shell
 $ git log -n1
 commit 2e820f8465946a2e4c2f6b0d8fdce80cd12fdd47 (HEAD -> main, origin/main, origin/HEAD)
-Author: Michael Mercurio <***REMOVED***>
+Author: Michael Mercurio <mmercurio@users.noreply.github.com>
 Date:   Fri Aug 30 11:22:02 2024 -0400
 
     rm leaked secret
@@ -121,7 +121,7 @@ Then we can easily see what was deleted:
 ```shell
 $ git show 2e820f8465946a2e4c2f6b0d8fdce80cd12fdd47
 commit 2e820f8465946a2e4c2f6b0d8fdce80cd12fdd47 (HEAD -> main, origin/main, origin/HEAD)
-Author: Michael Mercurio <***REMOVED***>
+Author: Michael Mercurio <mmercurio@users.noreply.github.com>
 Date:   Fri Aug 30 11:22:02 2024 -0400
 
     rm leaked secret
